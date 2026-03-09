@@ -1,8 +1,11 @@
 # ☕ Learning Java: Guia de Referência
 
 Este repositório centraliza os conceitos fundamentais para o desenvolvimento e aprendizado em Java.
-
+[Tópico 01 - Instalação, configuração e introdução ao Java](#tópico-01---instalação-configuração-e-introdução-ao-java)
+[Tópico 02 - Tipos Primitivos](#tópico-02---tipos-primitivos)
 ---
+
+# Tópico 01 - Instalação, configuração e introdução ao Java
 
 ## ⚙️ Configuração do Ambiente
 
@@ -45,11 +48,9 @@ A recomendação é utilizar letras minúsculas e organizar de forma hierárquic
 
 ### Padrões de Escrita (Naming Conventions)
 
-| Tipo                  | Padrão     | Exemplo                |
-|:----------------------|:-----------|:-----------------------|
-| **Classes**           | PascalCase | `ProcessadorPagamento` |
-| **Métodos/Atributos** | camelCase  | `calcularTotal()`      |
-| **Constantes**        | SNAKE_CASE | `VALOR_MAXIMO`         |
+**Classes:** - PascalCase - ***ProcessadorPagamento*** \
+**Métodos/Atributos:** - camelCase - ***calcularTotal()*** \
+**Constantes:** SNAKE_CASE - ***VALOR_MAXIMO***
 
 ---
 
@@ -62,3 +63,32 @@ Utilizados para auxiliar o esclarecimento do código para outros desenvolvedores
 * **JavaDoc:** `/** ... */` (Utilizado para descrever comportamentos de métodos e classes)
 
 ---
+
+# Tópico 02 - Tipos Primitivos
+
+Os tipos primitivos são a base do Java. Eles guardam valores simples diretamente na memória, consistem em palavras reservadas e são escritos totalmente em letras minúsculas.
+
+## Lista de Tipos Primitivos
+* **Inteiros:** `byte`, `short`, `int`, `long`
+* **Decimais (Ponto Flutuante):** `float`, `double`
+* **Caractere:** `char` (armazena um único caractere Unicode)
+* **Lógico:** `boolean` (`true` ou `false`)
+
+---
+
+## Literais e Casting
+
+No Java, precisamos diferenciar como o valor é escrito (**Literal**) de como ele é convertido (**Casting**).
+
+### 1. Literais (Sufixos)
+Para tipos específicos, adicionamos uma letra ao final do valor para que o Java não o confunda com `int` ou `double`:
+* **float:** Adicione um `F` ao final (ex: `float n = 10.5F;`).
+* **long:** Adicione um `L` ao final (ex: `long n = 1000L;`).
+
+### 2. Casting
+O **Casting** é a conversão explícita de um tipo para outro. Consiste em colocar o tipo desejado entre parênteses à frente da variável ou valor.
+
+* **Exemplo de Casting:**
+```java
+double valor = 9.99;
+int valorInteiro = (int) valor; // Resultado: 9 (perda de precisão)
