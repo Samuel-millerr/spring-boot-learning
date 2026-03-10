@@ -92,3 +92,13 @@ O **Casting** é a conversão explícita de um tipo para outro. Consiste em colo
 ```java
 double valor = 9.99;
 int valorInteiro = (int) valor; // Resultado: 9 (perda de precisão)
+```
+
+# Tópico 03 - Operadores
+## Aritiméticos
+São processos que podem ser realizados dentro do java com o proposito matématico, segue abaixo os principais operadores:
++, -. /, *
+
+## Relacionais
+## Lógicos
+## Atribuição
