@@ -29,5 +29,22 @@ public class Topic03 {
 
         boolean withinTheLaw = age > 30 && money > 4612;
         System.out.println(withinTheLaw);
+
+        // Atribuição
+        double bonus = 1800;
+        bonus += 100;
+        System.out.println(bonus);
+        bonus -= 200;
+        System.out.println(bonus);
+        bonus *= 2;
+        System.out.println(bonus);
+
+        int contador = 0;
+        contador += 1;
+        System.out.println(contador);
+        contador++;
+        System.out.println(contador);
+        ++contador;
+        System.out.println(contador);
     }
 }

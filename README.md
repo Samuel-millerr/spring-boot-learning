@@ -107,3 +107,4 @@ São operadores utilizados para validar dois diferentes valores resultando em um
 Se consistem em operadores de avaliação de condições, sendo eles o **&&** - AND, **||** - OR, **!** - NOT
 
 ## Atribuição
+Operadores que atribuem algo a variavél, sendo eles o =, +=, -=., *=, /=, %=
