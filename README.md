@@ -100,5 +100,10 @@ São processos que podem ser realizados dentro do java com o proposito matémati
 +, -. /, *
 
 ## Relacionais
+São operadores utilizados para validar dois diferentes valores resultando em um valor booleano, sendo os principais:
+ ==, >=, <= !=.
+
 ## Lógicos
+Se consistem em operadores de avaliação de condições, sendo eles o **&&** - AND, **||** - OR, **!** - NOT
+
 ## Atribuição
