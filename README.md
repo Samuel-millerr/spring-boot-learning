@@ -108,3 +108,25 @@ Se consistem em operadores de avaliação de condições, sendo eles o **&&** - 
 
 ## Atribuição
 Operadores que atribuem algo a variavél, sendo eles o =, +=, -=., *=, /=, %=
+
+# Tópico 04 - Estruturas de condicionais
+
+As estruturas condicionais são usadas para tomar decisões no programa. Elas verificam uma condição e executam um bloco de código apenas quando essa condição for verdadeira.
+
+## if
+O `if` testa uma condição booleana.
+
+```java
+if (condicao) {
+    // código executado se a condição for verdadeira
+}
+```
+
+Operador de negação !
+O operador ! inverte o valor booleano.
+
+```
+if (!condicao) {
+// código executado se a condição for falsa
+}
+```
