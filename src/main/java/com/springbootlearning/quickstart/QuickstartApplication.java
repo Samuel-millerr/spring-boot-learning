@@ -24,7 +24,7 @@ public class QuickstartApplication implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(final String... args) {
+	public void run(final String... args) throws InterruptedException {
 		log.info("Datasource: " + dataSource.toString());
 		final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		jdbcTemplate.execute("SELECT 1");
