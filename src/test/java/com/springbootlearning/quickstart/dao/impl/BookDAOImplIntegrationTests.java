@@ -16,14 +16,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-public class BookDaoImplIntegrationTests {
+public class BookDAOImplIntegrationTests {
 
     private BookDAOImpl underTest;
 
     private AuthorDAO authorDAO;
 
     @Autowired
-    public BookDaoImplIntegrationTests(BookDAOImpl underTest, AuthorDAO authorDAO) {
+    public BookDAOImplIntegrationTests(BookDAOImpl underTest, AuthorDAO authorDAO) {
         this.underTest = underTest;
         this.authorDAO = authorDAO;
     }
