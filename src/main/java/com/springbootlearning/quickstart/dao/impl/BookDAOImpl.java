@@ -2,6 +2,7 @@ package com.springbootlearning.quickstart.dao.impl;
 
 import com.springbootlearning.quickstart.dao.BookDAO;
 import com.springbootlearning.quickstart.domain.Book;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,9 @@ public class BookDAOImpl implements BookDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public BookDAOImpl(final JdbcTemplate jdbcTemplate) {
+    public BookDAOImpl(
+            @Qualifier("jdbcTemplate") final JdbcTemplate jdbcTemplate
+    ) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

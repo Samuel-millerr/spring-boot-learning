@@ -2,6 +2,7 @@ package com.springbootlearning.quickstart.dao.impl;
 
 import com.springbootlearning.quickstart.dao.AuthorDAO;
 import com.springbootlearning.quickstart.domain.Author;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,9 @@ public class AuthorDAOImpl implements AuthorDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public AuthorDAOImpl(final JdbcTemplate jdbcTemplate) {
+    public AuthorDAOImpl(
+            @Qualifier("jdbcTemplate") final JdbcTemplate jdbcTemplate
+    ) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -56,7 +59,7 @@ public class AuthorDAOImpl implements AuthorDAO {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(Long id) {
         jdbcTemplate.update(
                 "DELETE FROM authors WHERE id = ?",
                 id
