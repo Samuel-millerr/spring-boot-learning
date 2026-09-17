@@ -2,6 +2,7 @@ version: '3.1'
 
 services:
   jdbc-db:
+    container_name: quickstart-jdbc-database
     image: postgres
     ports:
       - "5433:5432"
@@ -10,6 +11,7 @@ services:
       POSTGRES_PASSWORD: root
 
   jpa-db:
+    container_name: quickstart-jpa-database
     image: postgres
     ports:
       - "5434:5432"

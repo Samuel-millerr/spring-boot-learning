@@ -15,7 +15,7 @@ public class JdbcDatasourceConfig {
 
     @Bean(name = "jdbcDataSource")
     @ConfigurationProperties("spring.datasource.jdbc")
-    public DataSource dataSource() {
+    public DataSource jdbcDataSource() {
         return DataSourceBuilder.create()
                 .type(HikariDataSource.class)
                 .build();

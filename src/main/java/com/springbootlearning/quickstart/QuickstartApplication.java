@@ -10,23 +10,8 @@ import org.springframework.stereotype.Service;
 import javax.sql.DataSource;
 
 @SpringBootApplication
-@Log
-public class QuickstartApplication implements CommandLineRunner {
-
-	private final DataSource dataSource;
-
-	public QuickstartApplication(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
-
+public class QuickstartApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(QuickstartApplication.class, args);
-	}
-
-	@Override
-	public void run(final String... args) throws InterruptedException {
-		log.info("Datasource: " + dataSource.toString());
-		final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		jdbcTemplate.execute("SELECT 1");
 	}
 }
