@@ -54,4 +54,14 @@ public class AuthorDAOImplTests {
         );
     }
 
+    @Test
+    public void testThatUpdateGeneratesTheCorrectSQL() {
+        Author author = TestDataUtil.createTestAuthorA();
+        underTest.update(author.getId(), author);
+
+        verify(jdbcTemplate).update(
+                "UPDATE authors SET id = ?, name = ?, age = ? WHERE id = ?",
+                1L, "John", 80, 1L
+        );
+    }
 }

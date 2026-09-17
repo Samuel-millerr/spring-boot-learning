@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,5 +75,26 @@ public class BookDAOImplIntegrationTests {
         assertThat(result)
                 .hasSize(3)
                 .containsExactly(bookA, bookB, bookC);
+    }
+
+    @Test
+    public void testThatBookCanBeUpdated() {
+        Author author = TestDataUtil.createTestAuthorA();
+
+        if (authorDAO.findOne(author.getId()).isEmpty()) {
+            authorDAO.create(author);
+        }
+
+        Book book = TestDataUtil.createTestBookA();
+        book.setAuthorId(author.getId());
+        underTest.create(book);
+
+        book.setTitle("UPDATED");
+        underTest.update(book.getIsbn(), book);
+
+        Optional<Book> result = underTest.findOne(book.getIsbn());
+
+        assertThat(result).isPresent();
+        assertThat(result.get()).isEqualTo(book);
     }
 }
