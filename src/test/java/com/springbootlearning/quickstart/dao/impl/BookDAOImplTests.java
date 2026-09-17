@@ -65,4 +65,14 @@ public class BookDAOImplTests {
                 "978-1-2345-678-9", "The Shadow in the Attic", 1L, "978-1-2345-678-9"
         );
     }
+
+    @Test
+    public void testThatDeleteGeneratesCorrectSQL() {
+        underTest.delete("978-1-2345-678-9");
+
+        verify(jdbcTemplate).update(
+                eq("DELETE FROM books WHERE isbn = ?"),
+                eq("978-1-2345-678-9")
+        );
+    }
 }

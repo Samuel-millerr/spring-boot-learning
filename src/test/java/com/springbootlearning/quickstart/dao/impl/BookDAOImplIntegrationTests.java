@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -96,5 +95,24 @@ public class BookDAOImplIntegrationTests {
 
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(book);
+    }
+
+    @Test
+    public void testThatBookCanBeDeleted() {
+        Author author = TestDataUtil.createTestAuthorA();
+
+        if (authorDAO.findOne(author.getId()).isEmpty()) {
+            authorDAO.create(author);
+        }
+
+        Book book = TestDataUtil.createTestBookA();
+        book.setAuthorId(author.getId());
+        underTest.create(book);
+
+        underTest.delete(book.getIsbn());
+
+        Optional<Book> result = underTest.findOne(book.getIsbn());
+
+        assertThat(result).isEmpty();
     }
 }
