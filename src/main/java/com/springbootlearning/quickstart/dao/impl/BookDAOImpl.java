@@ -1,7 +1,7 @@
 package com.springbootlearning.quickstart.dao.impl;
 
 import com.springbootlearning.quickstart.dao.BookDAO;
-import com.springbootlearning.quickstart.domain.Book;
+import com.springbootlearning.quickstart.domain.entities.Book;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;

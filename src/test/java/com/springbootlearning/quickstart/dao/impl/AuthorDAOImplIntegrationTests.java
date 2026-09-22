@@ -1,7 +1,7 @@
 package com.springbootlearning.quickstart.dao.impl;
 
 import com.springbootlearning.quickstart.TestDataUtil;
-import com.springbootlearning.quickstart.domain.Author;
+import com.springbootlearning.quickstart.domain.entities.Author;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.springbootlearning.quickstart;
 
-import com.springbootlearning.quickstart.domain.Author;
-import com.springbootlearning.quickstart.domain.Book;
+import com.springbootlearning.quickstart.domain.entities.Author;
+import com.springbootlearning.quickstart.domain.entities.Book;
 
 public class TestDataUtil {
 

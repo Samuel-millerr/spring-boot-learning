@@ -1,7 +1,7 @@
 package com.springbootlearning.quickstart.mappers;
 
 import com.springbootlearning.quickstart.TestDataUtil;
-import com.springbootlearning.quickstart.domain.Book;
+import com.springbootlearning.quickstart.domain.entities.Book;
 import org.junit.jupiter.api.Test;
 import tools.jackson.databind.ObjectMapper;
 

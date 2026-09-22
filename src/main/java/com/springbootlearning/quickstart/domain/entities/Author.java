@@ -1,4 +1,4 @@
-package com.springbootlearning.quickstart.domain;
+package com.springbootlearning.quickstart.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

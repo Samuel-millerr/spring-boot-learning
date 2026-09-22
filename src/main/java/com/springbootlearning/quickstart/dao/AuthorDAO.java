@@ -1,6 +1,6 @@
 package com.springbootlearning.quickstart.dao;
 
-import com.springbootlearning.quickstart.domain.Author;
+import com.springbootlearning.quickstart.domain.entities.Author;
 
 import java.util.List;
 import java.util.Optional;
