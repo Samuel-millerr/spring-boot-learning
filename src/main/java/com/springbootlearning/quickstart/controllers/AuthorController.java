@@ -21,7 +21,7 @@ public class AuthorController {
         this.authorMapper = authorMapper;
     }
 
-    @PostMapping(path = "/authors")
+    @PostMapping("/authors")
     public ResponseEntity<AuthorDTO> createAuthor(@RequestBody AuthorDTO request) {
         Author author = authorMapper.mapFrom(request);
         Author savedAuthor = authorService.createAuthor(author);

@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import tools.jackson.databind.ObjectMapper;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -19,8 +19,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
+@Transactional(transactionManager = "jpaTransactionManager")
 public class AuthorControllerIntegrationTests {
 
     private MockMvc mockMvc;
@@ -63,10 +63,10 @@ public class AuthorControllerIntegrationTests {
                         jsonPath("$.id").isNumber()
                 )
                 .andExpect(
-                        jsonPath("$.name").value("John")
+                        jsonPath("$.name").value(author.getName())
                 )
                 .andExpect(
-                        jsonPath("$.age").value("80")
+                        jsonPath("$.age").value(author.getAge())
                 );
     }
 }

@@ -2,6 +2,8 @@ package com.springbootlearning.quickstart.repositories;
 
 import com.springbootlearning.quickstart.TestDataUtil;
 import com.springbootlearning.quickstart.domain.entities.Author;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,11 @@ public class AuthorRepositoryIntegrationTests {
     @Autowired
     public AuthorRepositoryIntegrationTests(AuthorRepository underTest) {
         this.underTest = underTest;
+    }
+
+    @BeforeEach
+    public void cleanUp() {
+        underTest.deleteAll();
     }
 
     @Test
