@@ -6,10 +6,9 @@ import com.springbootlearning.quickstart.mappers.Mapper;
 import com.springbootlearning.quickstart.services.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class BookController {
@@ -27,5 +26,11 @@ public class BookController {
         Book book = bookMapper.mapFrom(request);
         Book savedBook = bookService.createBook(isbn, book);
         return new ResponseEntity<>(bookMapper.mapTo(savedBook), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/books")
+    public List<BookDTO> listBooks() {
+        List<Book> books = bookService.findAll();
+        return books.stream().map(bookMapper::mapTo).toList();
     }
 }

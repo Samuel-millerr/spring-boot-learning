@@ -2,6 +2,7 @@ package com.springbootlearning.quickstart.controllers;
 
 import com.springbootlearning.quickstart.TestDataUtil;
 import com.springbootlearning.quickstart.domain.entities.Author;
+import com.springbootlearning.quickstart.services.AuthorService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import tools.jackson.databind.ObjectMapper;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,12 +26,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AuthorControllerIntegrationTests {
 
     private MockMvc mockMvc;
+    private AuthorService authorService;
     private ObjectMapper objectMapper;
 
     @Autowired
-    public AuthorControllerIntegrationTests(MockMvc mockMvc, ObjectMapper objectMapper) {
+    public AuthorControllerIntegrationTests(MockMvc mockMvc, AuthorService authorService) {
         this.mockMvc = mockMvc;
-        this.objectMapper = objectMapper;
+        this.authorService = authorService;
+        this.objectMapper = new ObjectMapper();
     }
 
     @Test
@@ -67,6 +71,34 @@ public class AuthorControllerIntegrationTests {
                 )
                 .andExpect(
                         jsonPath("$.age").value(author.getAge())
+                );
+    }
+
+    @Test
+    public void testThatListAuthorsReturnsHttpStatus200Ok() throws Exception {
+        mockMvc.perform(
+                get("/authors")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    public void testThatListAuthorsReturnsListOfAuthors() throws Exception {
+        Author author = TestDataUtil.createTestAuthorA();
+        author.setId(null);
+        authorService.createAuthor(author);
+
+        mockMvc.perform(
+                        get("/authors")
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(
+                        jsonPath("$[0].id").isNumber()
+                )
+                .andExpect(
+                        jsonPath("$[0].name").value(author.getName())
+                )
+                .andExpect(
+                        jsonPath("$[0].age").value(author.getAge())
                 );
     }
 }

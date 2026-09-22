@@ -2,6 +2,7 @@ package com.springbootlearning.quickstart.controllers;
 
 import com.springbootlearning.quickstart.TestDataUtil;
 import com.springbootlearning.quickstart.domain.entities.Book;
+import com.springbootlearning.quickstart.services.BookService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import tools.jackson.databind.ObjectMapper;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,12 +26,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class BookControllerIntegrationTests {
 
     private MockMvc mockMvc;
+    private BookService bookService;
     private ObjectMapper objectMapper;
 
     @Autowired
-    public BookControllerIntegrationTests(MockMvc mockMvc, ObjectMapper objectMapper) {
+    public BookControllerIntegrationTests(MockMvc mockMvc, BookService bookService) {
         this.mockMvc = mockMvc;
-        this.objectMapper = objectMapper;
+        this.bookService = bookService;
+        this.objectMapper = new ObjectMapper();
     }
 
     @Test
@@ -62,5 +66,31 @@ public class BookControllerIntegrationTests {
         ).andExpect(
                 jsonPath("$.title").value(book.getTitle())
         );
+    }
+
+    @Test
+    public void testThatListBooksReturnsHttp200Ok() throws Exception {
+        mockMvc.perform(
+                get("/books")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                status().isOk()
+        );
+    }
+
+    @Test
+    public void testThatListBooksReturnsListOfBooks() throws Exception {
+        Book book = TestDataUtil.createTestBookA();
+        bookService.createBook(book.getIsbn(), book);
+
+        mockMvc.perform(
+                get("/books")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                jsonPath("$[0].isbn").value(book.getIsbn())
+        ).andExpect(
+                jsonPath("$[0].title").value(book.getTitle())
+        );
+
     }
 }
