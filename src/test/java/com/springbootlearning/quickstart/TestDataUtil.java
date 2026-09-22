@@ -1,4 +1,4 @@
-package com.springbootlearning.quickstart.dao;
+package com.springbootlearning.quickstart;
 
 import com.springbootlearning.quickstart.domain.Author;
 import com.springbootlearning.quickstart.domain.Book;

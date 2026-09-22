@@ -1,6 +1,6 @@
 package com.springbootlearning.quickstart.dao.impl;
 
-import com.springbootlearning.quickstart.dao.TestDataUtil;
+import com.springbootlearning.quickstart.TestDataUtil;
 import com.springbootlearning.quickstart.domain.Book;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
