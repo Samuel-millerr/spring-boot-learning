@@ -6,6 +6,7 @@ import com.springbootlearning.quickstart.services.BookService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -29,5 +30,10 @@ public class BookServiceImpl implements BookService {
                 bookRepository.findAll().spliterator(), false
         ).toList(
         );
+    }
+
+    @Override
+    public Optional<Book> findOne(String isbn) {
+        return bookRepository.findById(isbn);
     }
 }

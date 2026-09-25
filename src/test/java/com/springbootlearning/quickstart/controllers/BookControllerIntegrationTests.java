@@ -93,4 +93,39 @@ public class BookControllerIntegrationTests {
         );
 
     }
+
+    @Test
+    public void testThatGetBookReturnsHttpStatus200OkWhenBookExist() throws Exception {
+        Book book = TestDataUtil.createTestBookA();
+        bookService.createBook(book.getIsbn(), book);
+
+        mockMvc.perform(
+                get("/books/{isbn}", book.getIsbn())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    public void testThatGetBookReturnsHttpStatus404NotFoundWhenBookDoesNotExist() throws Exception {
+        mockMvc.perform(
+                get("/books/{isbn}", "book-99")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testThatGetBookReturnsBookWhenBookExist() throws Exception {
+        Book book = TestDataUtil.createTestBookA();
+        Book savedBook = bookService.createBook(book.getIsbn(), book);
+
+        mockMvc.perform(
+                        get("/books/{isbn}", savedBook.getIsbn())
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(
+                        jsonPath("$.isbn").value(savedBook.getIsbn())
+                )
+                .andExpect(
+                        jsonPath("$.title").value(book.getTitle())
+                );
+    }
 }
