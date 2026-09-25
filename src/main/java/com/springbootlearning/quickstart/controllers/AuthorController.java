@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 public class AuthorController {
@@ -26,7 +25,7 @@ public class AuthorController {
     @PostMapping("/authors")
     public ResponseEntity<AuthorDTO> createAuthor(@RequestBody AuthorDTO request) {
         Author author = authorMapper.mapFrom(request);
-        Author savedAuthor = authorService.createAuthor(author);
+        Author savedAuthor = authorService.save(author);
         return new ResponseEntity<>(authorMapper.mapTo(savedAuthor), HttpStatus.CREATED);
     }
 
@@ -44,6 +43,23 @@ public class AuthorController {
                     return new ResponseEntity<>(response, HttpStatus.OK);
                 }
         ).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PutMapping("/authors/{id}")
+    public ResponseEntity<AuthorDTO> fullUpdateAuthor(
+            @PathVariable Long id,
+            @RequestBody AuthorDTO request
+    ) {
+        if (!authorService.isExists(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        request.setId(id);
+        Author author = authorMapper.mapFrom(request);
+
+        Author savedAuthor = authorService.save(author);
+
+        return new ResponseEntity<>(authorMapper.mapTo(savedAuthor), HttpStatus.OK);
     }
 
 }

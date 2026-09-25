@@ -12,6 +12,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import tools.jackson.databind.ObjectMapper;
 
@@ -87,7 +88,7 @@ public class AuthorControllerIntegrationTests {
     public void testThatListAuthorsReturnsListOfAuthors() throws Exception {
         Author author = TestDataUtil.createTestAuthorA();
         author.setId(null);
-        authorService.createAuthor(author);
+        authorService.save(author);
 
         mockMvc.perform(
                         get("/authors")
@@ -107,27 +108,27 @@ public class AuthorControllerIntegrationTests {
     public void testThatGetAuthorReturnsHttpStatus200OkWhenAuthorExist() throws Exception {
         Author author = TestDataUtil.createTestAuthorA();
         author.setId(null);
-        authorService.createAuthor(author);
+        Author savedAuthor = authorService.save(author);
 
         mockMvc.perform(
-                get("/authors/1")
+                get("/authors/{id}", savedAuthor.getId())
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
     }
 
     @Test
     public void testThatGetAuthorReturnsHttpStatus404NotFoundWhenAuthorDoesNotExist() throws Exception {
-            mockMvc.perform(
-                    get("/authors/99")
-                            .contentType(MediaType.APPLICATION_JSON)
-            ).andExpect(status().isNotFound());
+        mockMvc.perform(
+                get("/authors/99")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isNotFound());
     }
 
     @Test
     public void testThatGetAuthorReturnsAuthorWhenAuthorExist() throws Exception {
         Author author = TestDataUtil.createTestAuthorA();
         author.setId(null);
-        Author savedAuthor = authorService.createAuthor(author);
+        Author savedAuthor = authorService.save(author);
 
         mockMvc.perform(
                         get("/authors/{id}", savedAuthor.getId())
@@ -141,5 +142,57 @@ public class AuthorControllerIntegrationTests {
                 .andExpect(
                         jsonPath("$.age").value(author.getAge())
                 );
+    }
+
+    @Test
+    public void testThatFullUpdateAuthorReturnsHttpStatus404WhenAuthorDoesNotExist() throws Exception {
+        Author author = TestDataUtil.createTestAuthorA();
+        String requestBody = objectMapper.writeValueAsString(author);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/authors/99")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+        ).andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testThatFullUpdateAuthorReturnsHttpStatus200WhenAuthorExists() throws Exception {
+        Author author = TestDataUtil.createTestAuthorA();
+        author.setId(null);
+        Author savedAuthor = authorService.save(author);
+
+        Author updateAuthor = TestDataUtil.createTestAuthorB();
+        String requestBody = objectMapper.writeValueAsString(updateAuthor);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/authors/{id}", savedAuthor.getId() )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    public void testThatFullUpdateUpdatesExistingAuthor() throws Exception {
+        Author author = TestDataUtil.createTestAuthorA();
+        author.setId(null);
+        Author savedAuthor = authorService.save(author);
+
+        Author updateAuthor = TestDataUtil.createTestAuthorB();
+        updateAuthor.setId(savedAuthor.getId());
+        String requestBody = objectMapper.writeValueAsString(updateAuthor);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/authors/{id}", savedAuthor.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+        ).andExpect(
+                jsonPath("$.id").value(savedAuthor.getId())
+        ).andExpect(
+                jsonPath("$.name").value(updateAuthor.getName())
+        ).andExpect(
+                jsonPath("$.age").value(updateAuthor.getAge())
+        );
+
     }
 }
