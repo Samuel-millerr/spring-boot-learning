@@ -17,4 +17,6 @@ public interface BookService {
 
     boolean isExists(String isbn);
 
+    void delete(String isbn);
+
 }

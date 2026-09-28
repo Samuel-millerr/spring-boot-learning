@@ -1,7 +1,6 @@
 package com.springbootlearning.quickstart.controllers;
 
 import com.springbootlearning.quickstart.TestDataUtil;
-import com.springbootlearning.quickstart.domain.dto.AuthorDTO;
 import com.springbootlearning.quickstart.domain.entities.Author;
 import com.springbootlearning.quickstart.services.AuthorService;
 import org.junit.jupiter.api.Test;
@@ -12,12 +11,10 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import tools.jackson.databind.ObjectMapper;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -150,7 +147,7 @@ public class AuthorControllerIntegrationTests {
         String requestBody = objectMapper.writeValueAsString(author);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.put("/authors/99")
+                put("/authors/99")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody)
         ).andExpect(status().isNotFound());
@@ -166,7 +163,7 @@ public class AuthorControllerIntegrationTests {
         String requestBody = objectMapper.writeValueAsString(updateAuthor);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.put("/authors/{id}", savedAuthor.getId() )
+                put("/authors/{id}", savedAuthor.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody)
         ).andExpect(status().isOk());
@@ -183,7 +180,7 @@ public class AuthorControllerIntegrationTests {
         String requestBody = objectMapper.writeValueAsString(updateAuthor);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.put("/authors/{id}", savedAuthor.getId())
+                put("/authors/{id}", savedAuthor.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody)
         ).andExpect(
@@ -206,7 +203,7 @@ public class AuthorControllerIntegrationTests {
         String requestBody = objectMapper.writeValueAsString(updateAuthor);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.patch("/authors/{id}", savedAuthor.getId())
+                patch("/authors/{id}", savedAuthor.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody)
         ).andExpect(status().isOk());
@@ -223,7 +220,7 @@ public class AuthorControllerIntegrationTests {
         String requestBody = objectMapper.writeValueAsString(updateAuthor);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.patch("/authors/" + savedAuthor.getId())
+                patch("/authors/" + savedAuthor.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody)
         ).andExpect(
@@ -233,5 +230,25 @@ public class AuthorControllerIntegrationTests {
         ).andExpect(
                 jsonPath("$.age").value(updateAuthor.getAge())
         );
+    }
+
+    @Test
+    public void testThatDeleteAuthorReturnsHttpStatus204ForNonExistingAuthor() throws Exception {
+        mockMvc.perform(
+                delete("/authors/999")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void testThatDeleteAuthorReturnsHttpStatus204ForExistingAuthor() throws Exception {
+        Author author = TestDataUtil.createTestAuthorA();
+        author.setId(null);
+        Author savedAuthor = authorService.save(author);
+
+        mockMvc.perform(
+                delete("/authors/" + savedAuthor.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isNoContent());
     }
 }
