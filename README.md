@@ -3,7 +3,6 @@
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.3-brightgreen)
 ![Java](https://img.shields.io/badge/Java-21-blue)
 ![Maven](https://img.shields.io/badge/Maven-3.9+-orange)
-![License](https://img.shields.io/badge/License-MIT-green)
 
 ## Overview
 
