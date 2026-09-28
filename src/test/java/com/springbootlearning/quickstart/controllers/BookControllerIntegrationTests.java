@@ -14,8 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import tools.jackson.databind.ObjectMapper;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -65,7 +64,6 @@ public class BookControllerIntegrationTests {
                         .content(requestBody)
         ).andExpect(status().isOk());
     }
-
 
     @Test
     public void testThatCreateBookReturnsCreatedBook() throws Exception {
@@ -162,5 +160,41 @@ public class BookControllerIntegrationTests {
                 .andExpect(
                         jsonPath("$.title").value(book.getTitle())
                 );
+    }
+
+    @Test
+    public void testThatPartialUpdateBookReturnsHttpStatus200Ok() throws Exception {
+        Book book = TestDataUtil.createTestBookA();
+        Book savedBook = bookService.createUpdateBook(book.getIsbn(), book);
+
+        Book updateBook = TestDataUtil.createTestBookA();
+        updateBook.setTitle("UPDATED");
+        String requestBody = objectMapper.writeValueAsString(updateBook);
+
+        mockMvc.perform(
+                patch("/books/{isbn}", savedBook.getIsbn())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    public void testThatPartialUpdateBookReturnsUpdatedBook() throws Exception {
+        Book book = TestDataUtil.createTestBookA();
+        Book savedBook = bookService.createUpdateBook(book.getIsbn(), book);
+
+        Book updateBook = TestDataUtil.createTestBookA();
+        updateBook.setTitle("UPDATED");
+        String requestBody = objectMapper.writeValueAsString(updateBook);
+
+        mockMvc.perform(
+                patch("/books/{isbn}", savedBook.getIsbn())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+        ).andExpect(
+                jsonPath("$.isbn").value(savedBook.getIsbn())
+        ).andExpect(
+                jsonPath("$.title").value(updateBook.getTitle())
+        );
     }
 }

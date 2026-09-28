@@ -25,6 +25,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Book partialUpdate(String isbn, Book book) {
+        book.setIsbn(isbn);
+
+        return bookRepository.findById(isbn).map(existingBook -> {
+            Optional.ofNullable(book.getTitle()).ifPresent(existingBook::setTitle);
+            Optional.ofNullable(book.getAuthorId()).ifPresent(existingBook::setAuthorId);
+            return bookRepository.save(existingBook);
+        }).orElseThrow(() -> new RuntimeException("Book with isbn " + isbn + " not found"));
+    }
+
+    @Override
     public List<Book> findAll() {
         return StreamSupport.stream(
                 bookRepository.findAll().spliterator(), false

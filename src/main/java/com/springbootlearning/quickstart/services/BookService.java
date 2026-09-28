@@ -9,6 +9,8 @@ public interface BookService {
 
     Book createUpdateBook(String isbn, Book book);
 
+    Book partialUpdate(String isbn, Book book);
+
     List<Book> findAll();
 
     Optional<Book> findOne(String isbn);
