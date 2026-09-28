@@ -36,7 +36,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
-    public void testThatCreateAuthorSuccessfullyReturnsHttp201Created() throws Exception {
+    public void testThatCreateAuthorReturnsHttp201Created() throws Exception {
         Author author = TestDataUtil.createTestAuthorA();
         author.setId(null);
 
@@ -52,7 +52,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
-    public void testThatCreateAuthorSuccessfullyReturnsSavedAuthor() throws Exception {
+    public void testThatCreateAuthorReturnsSavedAuthor() throws Exception {
         Author author = TestDataUtil.createTestAuthorA();
         author.setId(null);
 
@@ -74,7 +74,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
-    public void testThatListAuthorsReturnsHttpStatus200Ok() throws Exception {
+    public void testThatListAuthorsReturnsHttp200Ok() throws Exception {
         mockMvc.perform(
                 get("/authors")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -82,7 +82,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
-    public void testThatListAuthorsReturnsListOfAuthors() throws Exception {
+    public void testThatListAuthorsReturnsAuthors() throws Exception {
         Author author = TestDataUtil.createTestAuthorA();
         author.setId(null);
         authorService.save(author);
@@ -102,7 +102,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
-    public void testThatGetAuthorReturnsHttpStatus200OkWhenAuthorExist() throws Exception {
+    public void testThatGetAuthorReturnsHttp200OkWhenAuthorExists() throws Exception {
         Author author = TestDataUtil.createTestAuthorA();
         author.setId(null);
         Author savedAuthor = authorService.save(author);
@@ -114,7 +114,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
-    public void testThatGetAuthorReturnsHttpStatus404NotFoundWhenAuthorDoesNotExist() throws Exception {
+    public void testThatGetAuthorReturnsHttp404NotFoundWhenAuthorDoesNotExist() throws Exception {
         mockMvc.perform(
                 get("/authors/99")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -122,7 +122,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
-    public void testThatGetAuthorReturnsAuthorWhenAuthorExist() throws Exception {
+    public void testThatGetAuthorReturnsAuthorWhenAuthorExists() throws Exception {
         Author author = TestDataUtil.createTestAuthorA();
         author.setId(null);
         Author savedAuthor = authorService.save(author);
@@ -142,7 +142,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
-    public void testThatFullUpdateAuthorReturnsHttpStatus404WhenAuthorDoesNotExist() throws Exception {
+    public void testThatFullUpdateAuthorReturnsHttp404NotFoundWhenAuthorDoesNotExist() throws Exception {
         Author author = TestDataUtil.createTestAuthorA();
         String requestBody = objectMapper.writeValueAsString(author);
 
@@ -154,7 +154,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
-    public void testThatFullUpdateAuthorReturnsHttpStatus200WhenAuthorExists() throws Exception {
+    public void testThatFullUpdateAuthorReturnsHttp200OkWhenAuthorExists() throws Exception {
         Author author = TestDataUtil.createTestAuthorA();
         author.setId(null);
         Author savedAuthor = authorService.save(author);
@@ -170,7 +170,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
-    public void testThatFullUpdateUpdatesExistingAuthor() throws Exception {
+    public void testThatFullUpdateAuthorReturnsUpdatedAuthorWhenAuthorExists() throws Exception {
         Author author = TestDataUtil.createTestAuthorA();
         author.setId(null);
         Author savedAuthor = authorService.save(author);
@@ -193,7 +193,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
-    public void testThatPartialUpdateAuthorReturnsHttpStatus20Ok() throws Exception {
+    public void testThatPartialUpdateAuthorReturnsHttp200OkWhenAuthorExists() throws Exception {
         Author author = TestDataUtil.createTestAuthorA();
         author.setId(null);
         Author savedAuthor = authorService.save(author);
@@ -210,7 +210,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
-    public void testThatPartialUpdateAuthorReturnsUpdatedAuthor() throws Exception {
+    public void testThatPartialUpdateAuthorReturnsUpdatedAuthorWhenAuthorExists() throws Exception {
         Author author = TestDataUtil.createTestAuthorA();
         author.setId(null);
         Author savedAuthor = authorService.save(author);
@@ -233,7 +233,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
-    public void testThatDeleteAuthorReturnsHttpStatus204ForNonExistingAuthor() throws Exception {
+    public void testThatDeleteAuthorReturnsHttp204NoContentWhenAuthorDoesNotExist() throws Exception {
         mockMvc.perform(
                 delete("/authors/999")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -241,7 +241,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
-    public void testThatDeleteAuthorReturnsHttpStatus204ForExistingAuthor() throws Exception {
+    public void testThatDeleteAuthorReturnsHttp204NoContentWhenAuthorExists() throws Exception {
         Author author = TestDataUtil.createTestAuthorA();
         author.setId(null);
         Author savedAuthor = authorService.save(author);

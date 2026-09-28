@@ -51,7 +51,7 @@ public class BookControllerIntegrationTests {
     }
 
     @Test
-    public void testThatUpdateBookReturnsHttpStatus200Ok() throws Exception {
+    public void testThatUpdateBookReturnsHttp200OkWhenBookExists() throws Exception {
         Book book = TestDataUtil.createTestBookA();
         Book savedBook = bookService.createUpdateBook(book.getIsbn(), book);
 
@@ -83,7 +83,7 @@ public class BookControllerIntegrationTests {
     }
 
     @Test
-    public void testThatUpdateBookReturnsUpdatedBook() throws Exception {
+    public void testThatUpdateBookReturnsUpdatedBookWhenBookExists() throws Exception {
         Book book = TestDataUtil.createTestBookA();
         Book savedBook = bookService.createUpdateBook(book.getIsbn(), book);
 
@@ -112,7 +112,7 @@ public class BookControllerIntegrationTests {
     }
 
     @Test
-    public void testThatListBooksReturnsListOfBooks() throws Exception {
+    public void testThatListBooksReturnsBooks() throws Exception {
         Book book = TestDataUtil.createTestBookA();
         bookService.createUpdateBook(book.getIsbn(), book);
 
@@ -128,7 +128,7 @@ public class BookControllerIntegrationTests {
     }
 
     @Test
-    public void testThatGetBookReturnsHttpStatus200OkWhenBookExist() throws Exception {
+    public void testThatGetBookReturnsHttp200OkWhenBookExists() throws Exception {
         Book book = TestDataUtil.createTestBookA();
         bookService.createUpdateBook(book.getIsbn(), book);
 
@@ -139,7 +139,7 @@ public class BookControllerIntegrationTests {
     }
 
     @Test
-    public void testThatGetBookReturnsHttpStatus404NotFoundWhenBookDoesNotExist() throws Exception {
+    public void testThatGetBookReturnsHttp404NotFoundWhenBookDoesNotExist() throws Exception {
         mockMvc.perform(
                 get("/books/{isbn}", "book-99")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -147,7 +147,7 @@ public class BookControllerIntegrationTests {
     }
 
     @Test
-    public void testThatGetBookReturnsBookWhenBookExist() throws Exception {
+    public void testThatGetBookReturnsBookWhenBookExists() throws Exception {
         Book book = TestDataUtil.createTestBookA();
         Book savedBook = bookService.createUpdateBook(book.getIsbn(), book);
 
@@ -163,7 +163,7 @@ public class BookControllerIntegrationTests {
     }
 
     @Test
-    public void testThatPartialUpdateBookReturnsHttpStatus200Ok() throws Exception {
+    public void testThatPartialUpdateBookReturnsHttp200OkWhenBookExists() throws Exception {
         Book book = TestDataUtil.createTestBookA();
         Book savedBook = bookService.createUpdateBook(book.getIsbn(), book);
 
@@ -179,7 +179,7 @@ public class BookControllerIntegrationTests {
     }
 
     @Test
-    public void testThatPartialUpdateBookReturnsUpdatedBook() throws Exception {
+    public void testThatPartialUpdateBookReturnsUpdatedBookWhenBookExists() throws Exception {
         Book book = TestDataUtil.createTestBookA();
         Book savedBook = bookService.createUpdateBook(book.getIsbn(), book);
 
@@ -199,7 +199,7 @@ public class BookControllerIntegrationTests {
     }
 
     @Test
-    public void testThatDeleteBookReturnsHttpStatus204ForNonExistingBook() throws Exception {
+    public void testThatDeleteBookReturnsHttp204NoContentWhenBookDoesNotExist() throws Exception {
         mockMvc.perform(
                 delete("/books/999")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -207,7 +207,7 @@ public class BookControllerIntegrationTests {
     }
 
     @Test
-    public void testThatDeleteBookReturnsHttpStatus204ForExistingBook() throws Exception {
+    public void testThatDeleteBookReturnsHttp204NoContentWhenBookExists() throws Exception {
         Book book = TestDataUtil.createTestBookA();
         Book savedBook = bookService.createUpdateBook(book.getIsbn(), book);
 
