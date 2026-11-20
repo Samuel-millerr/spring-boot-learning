@@ -130,3 +130,23 @@ if (!condicao) {
 // código executado se a condição for falsa
 }
 ```
+
+## else if
+O `else if` permite testar múltiplas condições.
+
+```java
+if (condicao1) {
+    // código executado se a condição1 for verdadeira
+} else if (condicao2) {
+    // código executado se a condição2 for verdadeira
+} else {
+    // código executado se nenhuma das condições anteriores for verdadeira
+}
+```
+
+## Operador Ternário
+O operador ternário é uma forma concisa de escrever uma expressão condicional. Ele tem a seguinte sintaxe
+
+```
+condicao ? valor_se_verdadeiro : valor_se_falso;
+```
